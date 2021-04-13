@@ -72,7 +72,7 @@ class ConexionBD:
             print("Consulta executada")
             return listaConsulta
 
-    def insertarRexistro(self, consultaSQL):
+    def insertarRexistro(self, tab, val):
 
         try:
             if self.conexion is None:
@@ -81,8 +81,9 @@ class ConexionBD:
                 if self.cursor is None:
                     print("Creando consulta: É necesario realizar a creación do cursor previamente")
                 else:
-                    self.cursor.execute(consultaSQL)
-                    self.conexion.commit()
+                    print("Insertando en tabla", tab, "con valores", val)
+                    consulta = "INSERT INTO "+tab+" VALUES (?)"
+                    self.cursor.execute(consulta, val)
 
         except dbapi.DatabaseError as e:
             print("Erro facendo a insercion: " + str(e))
