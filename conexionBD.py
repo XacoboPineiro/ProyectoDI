@@ -30,6 +30,7 @@ class ConexionBD:
                 if self.cursor is None:
                     print("Creando consulta: É necesario realizar a creación do cursor previamente")
                 else:
+
                     self.cursor.execute(consultaSQL)
 
                     for fila in self.cursor.fetchall():
@@ -42,7 +43,7 @@ class ConexionBD:
             print("Consulta executada")
             return listaConsulta
 
-    def consultaConParametros(self, consultaSQL, *parametros):
+    def consultaConParametros(self, tab, campo,  *parametros):
         """
         Retorna unha lista cos rexistros dunha consulta realizada pasandolle os parámetros.
         A consulta ten que estar definida con '?' na clausula where de SQL.
@@ -60,6 +61,22 @@ class ConexionBD:
                 if self.cursor is None:
                     print("Creando consulta: É necesario realizar a creación do cursor previamente")
                 else:
+                    if campos is None
+                        sql = "SELECT * FROM " + tab + " "
+                    else:
+                        sql = "SELECT "
+                        for campo in campos:
+                            sql = sql + campo + ", "
+                        sql = sql[:-2]
+                        sql = sql + " FROM " + tab + " "
+                    if parametros != None
+                        sql = sql + "WHERE "
+                        for clave in parametros.keys():
+                            sql = sql + clave + "=?. "
+                        sql = sql[-2]
+
+                    print(sql)
+
                     self.cursor.execute(consultaSQL, parametros)
 
                     for fila in self.cursor.fetchall():
@@ -82,7 +99,7 @@ class ConexionBD:
                     print("Creando consulta: É necesario realizar a creación do cursor previamente")
                 else:
                     print("Insertando en tabla", tab, "con valores", val)
-                    consulta = "INSERT INTO "+tab+" VALUES (?)"
+                    consulta = "INSERT INTO "+tab+" VALUES ('4', 'Xacobo', 'Piñeiro Cacableos', '986554775', 'calle', 'Vigo', 'Pontevedra', '36547', 'España', '1')"
                     self.cursor.execute(consulta, val)
 
         except dbapi.DatabaseError as e:
